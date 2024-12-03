@@ -1,1 +1,8 @@
 /vendor/
+composer.lock
+.DS_Store
+.idea/
+.vscode/
+
+signature.cms
+test.txt

@@ -4,18 +4,38 @@ namespace Peculiarventures\GoodkeyCms;
 
 use Exception;
 
+/**
+ * GoodKey API Client
+ */
 class ApiClient
 {
-    private $baseUrl;
-    private $token;
+    /** @var string */
+    private string $baseUrl;
 
-    public function __construct($baseUrl, $token)
+    /** @var string */
+    private string $token;
+
+    /**
+     * Constructor
+     * 
+     * @param string $baseUrl GoodKey API base URL
+     * @param string $token API token
+     */
+    public function __construct(string $baseUrl, string $token)
     {
         $this->baseUrl = rtrim($baseUrl, '/');
         $this->token = $token;
     }
 
-    private function request($method, $path, $options = [])
+    /**
+     * Makes an API request
+     * 
+     * @param string $method HTTP method
+     * @param string $path API path
+     * @param array $options cURL options
+     * @throws Exception When API request fails
+     */
+    private function request(string $method, string $path, array $options = []): array
     {
         $url = $this->baseUrl . $path;
         $ch = curl_init($url);
@@ -53,7 +73,16 @@ class ApiClient
         return [$response, $httpCode];
     }
 
-    private function jsonRequest($method, $path, $data = null)
+    /**
+     * Makes a JSON API request
+     * 
+     * @param string $method HTTP method
+     * @param string $path API path
+     * @param mixed $data Request data
+     * @return array JSON response
+     * @throws Exception When API request fails
+     */
+    private function jsonRequest(string $method, string $path, $data = null): array
     {
         $options = [
             CURLOPT_HTTPHEADER => [
@@ -65,11 +94,11 @@ class ApiClient
         if ($data !== null) {
             $options[CURLOPT_POSTFIELDS] = json_encode($data);
             // Debug log for request data
-            error_log("JSON Request Payload: " . json_encode($data));
+            // error_log("JSON Request Payload: " . json_encode($data));
         }
 
         // Debug log for headers
-        error_log("JSON Request Headers: " . json_encode($options[CURLOPT_HTTPHEADER]));
+        // error_log("JSON Request Headers: " . json_encode($options[CURLOPT_HTTPHEADER]));
 
         list($response, $httpCode) = $this->request($method, $path, $options);
 
@@ -84,29 +113,60 @@ class ApiClient
         return json_decode($response, true);
     }
 
-    public function getTokenProfile()
+    /**
+     * Gets token profile
+     * 
+     * @return array Token profile
+     */
+    public function getTokenProfile(): array
     {
         return $this->jsonRequest('GET', '/token/profile');
     }
 
-    public function getKey($keyId)
+    /**
+     * Gets key
+     * 
+     * @param string $keyId Key ID
+     * @return array Key
+     */
+    public function getKey(string $keyId): array
     {
         return $this->jsonRequest('GET', '/key/' . urlencode($keyId));
     }
 
-    public function getCertificate($keyId, $certificateId)
+    /**
+     * Gets certificate
+     * 
+     * @param string $keyId Key ID
+     * @param string $certificateId Certificate ID
+     * @return array Certificate
+     */
+    public function getCertificate(string $keyId, string $certificateId): array
     {
         return $this->jsonRequest('GET', '/key/' . urlencode($keyId) . '/certificate/' . urlencode($certificateId));
     }
 
-    public function downloadCertificate($keyId, $certificateId)
+    /**
+     * Downloads certificate
+     * 
+     * @param string $keyId Key ID
+     * @param string $certificateId Certificate ID
+     * @return string Certificate data
+     */
+    public function downloadCertificate(string $keyId, string $certificateId): string
     {
         $response = $this->jsonRequest('GET', '/key/' . urlencode($keyId) . '/certificate/' . urlencode($certificateId) . '/download');
 
         return $this->base64UrlDecode($response['data']);
     }
 
-    public function createOperation($keyId)
+    /**
+     * Creates a signing operation
+     * 
+     * @param string $keyId Key ID
+     * @return array Operation
+     */
+    public function createOperation(string $keyId): array
     {
         $data = [
             'type' => 'sign',
@@ -120,17 +180,26 @@ class ApiClient
         return $this->jsonRequest('POST', '/key/' . urlencode($keyId) . '/operation', $data);
     }
 
-    private function base64UrlEncode($data)
+
+    private function base64UrlEncode(string $data): string
     {
         return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
     }
 
-    private function base64UrlDecode($data)
+    private function base64UrlDecode(string $data): string
     {
         return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT));
     }
 
-    public function finalizeOperation($keyId, $operationId, $data)
+    /**
+     * Finalizes a signing operation
+     * 
+     * @param string $keyId Key ID
+     * @param string $operationId Operation ID
+     * @param string $data Data to sign
+     * @return array Finalized operation
+     */
+    public function finalizeOperation(string $keyId, string $operationId, string $data): array
     {
         $requestData = [
             'data' => $this->base64UrlEncode($data)

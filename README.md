@@ -1,45 +1,69 @@
-# goodkey-cms-php
+# GoodKey CMS PHP SDK
 
-To set up the environment for running a PHP server and resolve the `command not found: php` error, you need to install PHP on your computer.
+A PHP SDK for creating CMS (Cryptographic Message Syntax) packages using GoodKey service.
 
-**For macOS:**
+## Requirements
 
-1. **Install Homebrew** (if it is not already installed):
+- PHP 7.4 or higher
+- Composer
+- OpenSSL
 
-   ```sh
-   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-   ```
+## Installation
 
-2. **Install PHP** using Homebrew:
+### 1. Install PHP
 
-   ```sh
-   brew install php
-   ```
+**On macOS:**
 
-3. **Start the server** from the directory with your `index.php`:
+```sh
+# Install via Homebrew
+brew install php
+```
 
-   ```sh
-   php -S localhost:8000
-   ```
+**On Ubuntu/Debian:**
 
-**For Ubuntu/Debian:**
+```sh
+# Install via apt
+sudo apt update
+sudo apt install php
+```
 
-1. **Update the package manager**:
+### 2. Install Dependencies
 
-   ```sh
-   sudo apt update
-   ```
+```bash
+composer install
+```
 
-2. **Install PHP**:
+## Configuration
 
-   ```sh
-   sudo apt install php
-   ```
+Set required environment variables:
 
-3. **Start the server** from the directory with your `index.php`:
+```bash
+# GoodKey API URL
+export API_URL="http://api.goodkey.pp.ua"
+# GoodKey API Token
+export API_TOKEN="gkt-01234567890abcdef"
+```
 
-   ```sh
-   php -S localhost:8000
-   ```
+## Usage
 
-After installing PHP, you will be able to successfully start the server and use your API.
+Start the development server:
+
+```bash
+php -S localhost:8000 -t src
+```
+
+## Testing
+
+Run the included test script to verify functionality:
+
+```bash
+bash test.sh
+```
+
+The test script:
+
+1. Creates a test file (`test.txt`)
+2. Calculates SHA-256 hash
+3. Generates CMS signature
+4. Saves signature to `signature.cms`
+5. Verifies signature using OpenSSL

@@ -1,5 +1,8 @@
 {
-    "name": "peculiarventures/goodkey-cms",
+    "name": "peculiarventures/goodkey-cms-php",
+    "description": "PHP SDK for creating CMS packages with GoodKey service",
+    "type": "library",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Peculiarventures\\GoodkeyCms\\": "src/"
@@ -12,7 +15,7 @@
         }
     ],
     "require": {
-        "php": "^7.1 || ^8.0",
+        "php": ">=7.4",
         "sop/asn1": "^4.1"
     }
 }
