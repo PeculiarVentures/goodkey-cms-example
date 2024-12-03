@@ -72,7 +72,7 @@ php -S localhost:8000 -t src
 Run the included test script to verify functionality:
 
 ```bash
-bash test.sh
+bash test-cli.sh
 ```
 
 The test script:
