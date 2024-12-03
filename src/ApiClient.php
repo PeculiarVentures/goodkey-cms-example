@@ -136,10 +136,15 @@ class ApiClient
             'data' => $this->base64UrlEncode($data)
         ];
 
-        return $this->jsonRequest(
+        $result = $this->jsonRequest(
             'PATCH',
             '/key/' . urlencode($keyId) . '/operation/' . urlencode($operationId) . '/finalize',
             $requestData
         );
+        if ($result['data'] !== null) {
+            $result['data'] = $this->base64UrlDecode($result['data']);
+        }
+
+        return $result;
     }
 }

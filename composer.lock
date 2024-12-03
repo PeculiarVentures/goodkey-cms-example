@@ -4,44 +4,34 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fa36d817ed0d220ac0f9c06ea70ba417",
+    "content-hash": "ed954e9f5858c905107b9ce9182cdfba",
     "packages": [
         {
-            "name": "fgrosse/phpasn1",
-            "version": "v2.5.0",
+            "name": "sop/asn1",
+            "version": "4.1.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/fgrosse/PHPASN1.git",
-                "reference": "42060ed45344789fb9f21f9f1864fc47b9e3507b"
+                "url": "https://github.com/sop/asn1.git",
+                "reference": "074efe8f7c353c54edc809ac3d74efda83edd776"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fgrosse/PHPASN1/zipball/42060ed45344789fb9f21f9f1864fc47b9e3507b",
-                "reference": "42060ed45344789fb9f21f9f1864fc47b9e3507b",
+                "url": "https://api.github.com/repos/sop/asn1/zipball/074efe8f7c353c54edc809ac3d74efda83edd776",
+                "reference": "074efe8f7c353c54edc809ac3d74efda83edd776",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1 || ^8.0"
+                "ext-gmp": "*",
+                "ext-mbstring": "*",
+                "php": ">=7.2"
             },
             "require-dev": {
-                "php-coveralls/php-coveralls": "~2.0",
-                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0"
-            },
-            "suggest": {
-                "ext-bcmath": "BCmath is the fallback extension for big integer calculations",
-                "ext-curl": "For loading OID information from the web if they have not bee defined statically",
-                "ext-gmp": "GMP is the preferred extension for big integer calculations",
-                "phpseclib/bcmath_compat": "BCmath polyfill for servers where neither GMP nor BCmath is available"
+                "phpunit/phpunit": "^8.1"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0.x-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
-                    "FG\\": "lib/"
+                    "Sop\\ASN1\\": "lib/ASN1/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -50,37 +40,25 @@
             ],
             "authors": [
                 {
-                    "name": "Friedrich Große",
-                    "email": "friedrich.grosse@gmail.com",
-                    "homepage": "https://github.com/FGrosse",
-                    "role": "Author"
-                },
-                {
-                    "name": "All contributors",
-                    "homepage": "https://github.com/FGrosse/PHPASN1/contributors"
+                    "name": "Joni Eskelinen",
+                    "email": "jonieske@gmail.com",
+                    "role": "Developer"
                 }
             ],
-            "description": "A PHP Framework that allows you to encode and decode arbitrary ASN.1 structures using the ITU-T X.690 Encoding Rules.",
-            "homepage": "https://github.com/FGrosse/PHPASN1",
+            "description": "A PHP library for X.690 ASN.1 DER encoding and decoding.",
+            "homepage": "https://github.com/sop/asn1",
             "keywords": [
                 "DER",
                 "asn.1",
                 "asn1",
-                "ber",
-                "binary",
-                "decoding",
-                "encoding",
-                "x.509",
                 "x.690",
-                "x509",
                 "x690"
             ],
             "support": {
-                "issues": "https://github.com/fgrosse/PHPASN1/issues",
-                "source": "https://github.com/fgrosse/PHPASN1/tree/v2.5.0"
+                "issues": "https://github.com/sop/asn1/issues",
+                "source": "https://github.com/sop/asn1/tree/4.1.1"
             },
-            "abandoned": true,
-            "time": "2022-12-19T11:08:26+00:00"
+            "time": "2022-02-17T07:08:51+00:00"
         }
     ],
     "packages-dev": [],
@@ -89,7 +67,9 @@
     "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": {},
+    "platform": {
+        "php": "^7.1 || ^8.0"
+    },
     "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
