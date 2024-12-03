@@ -1,6 +1,6 @@
-# GoodKey CMS PHP SDK
+# GoodKey CMS PHP Application
 
-A PHP SDK for creating CMS (Cryptographic Message Syntax) packages using GoodKey service.
+A PHP application for creating CMS (Cryptographic Message Syntax) packages using the GoodKey signing service.
 
 ## Requirements
 
@@ -82,3 +82,37 @@ The test script:
 3. Generates CMS signature
 4. Saves signature to `signature.cms`
 5. Verifies signature using OpenSSL
+
+### Example: Creating a CMS Signature
+
+Here's a simple example demonstrating how to use the application classes to create a CMS signature:
+
+```php
+<?php
+
+require 'vendor/autoload.php';
+
+use Peculiarventures\GoodkeyCms\ApiClient;
+use Peculiarventures\GoodkeyCms\CmsBuilder;
+
+// Create client and CMS builder
+$client = new ApiClient(
+   getenv('API_URL'),
+   getenv('API_TOKEN')
+);
+
+$builder = new CmsBuilder($client);
+
+// Example data to sign
+$data = 'This is a test message.';
+$hash = hash('sha256', $data);
+
+// Create CMS signature
+$cms = $builder->create($hash);
+
+// Return signed data
+header('Content-Type: application/octet-stream');
+echo $cms;
+```
+
+This script initializes the `ApiClient` and `CmsBuilder` classes, creates a SHA-256 hash of the data, generates a CMS signature, and returns the signed data.

@@ -1,6 +1,6 @@
 {
-    "name": "peculiarventures/goodkey-cms-php",
-    "description": "PHP SDK for creating CMS packages with GoodKey service",
+    "name": "peculiarventures/goodkey-cms-example",
+    "description": "A PHP application for creating CMS (Cryptographic Message Syntax) packages using the GoodKey signing service.",
     "type": "library",
     "license": "MIT",
     "autoload": {
